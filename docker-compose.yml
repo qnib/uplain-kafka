@@ -35,7 +35,7 @@ services:
       restart_policy:
         condition: on-failure
   broker:
-    image: qnib/plain-kafka:0.10.0.1
+    image: qnib/uplain-kafka
     ports:
       - "9092:9092"
     deploy:
