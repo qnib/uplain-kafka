@@ -1,7 +1,7 @@
 FROM qnib/uplain-openjre8
 
-ARG KAFKA_VER=0.10.0.1
-ARG API_VER=2.11
+ARG KAFKA_VER=0.11.0.0
+ARG API_VER=2.12
 ENV KAFKA_PORT=9092 \
     ENTRYPOINTS_DIR=/opt/qnib/entry \
     ZK_SERVERS=zookeeper \
