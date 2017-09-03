@@ -1,7 +1,7 @@
 version: '3'
 services:
   zookeeper:
-    image: qnib/plain-zookeeper
+    image: qnib/plain-zookeeper@sha256:6dfdaae24f3d1ef77e76dff85a5ab8ac7edb2d145935f213b7ae5176377eacc1
     ports:
       - "2181:2181"
     deploy:
@@ -17,15 +17,13 @@ services:
       restart_policy:
         condition: on-failure
   zkui:
-    image: qnib/plain-zkui
+    image: qnib/plain-zkui@sha256:9e9a9a1994adc012ef7a471d10b21d5c27bced0dd59e8580002dc4f03e79c05b
     ports:
       - "9090:9090"
     environment:
-      ZK_SERVER: "kafka_zookeeper"
+      - ZK_SERVER=tasks.zookeeper:2181
     deploy:
       resources:
-        # Only one master for now
-        replicas: 1
         limits:
           cpus: '1'
           memory: 512M
@@ -35,13 +33,13 @@ services:
       restart_policy:
         condition: on-failure
   broker:
-    image: qnib/uplain-kafka
+    image: qnib/uplain-kafka@sha256:a0be0daac432e092989b3909e2fccd1df4de15424bdcdfeb19ef7f681687169e
     ports:
       - "9092:9092"
     deploy:
+      # Only one master for now
+      replicas: 1
       resources:
-        # Only one master for now
-        replicas: 1
         limits:
           cpus: '1'
           memory: 768M
@@ -52,5 +50,5 @@ services:
         condition: on-failure
     environment:
       KAFKA_BROKER_ID: '{{.Task.Slot}}'
-      ZK_SERVERS: "kafka_zookeeper"
+      ZK_SERVERS: "tasks.zookeeper"
       ADVERTISED_LISTENERS: "localhost:9092"
