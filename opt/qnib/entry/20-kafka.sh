@@ -20,6 +20,6 @@ cat /opt/qnib/kafka/conf/server.properties \
 > /opt/kafka/config/server.properties
 
 if [[ "X${ADVERTISED_LISTENERS}" != "X" ]];then
-    echo "[!!] Not yet implemented in configure script. Please create sed command in /opt/qnib/entry/20-kafka.sh"
-    exit 1
+    echo "[II] Set listeners=PLAINTEXT://${ADVERTISED_LISTENERS}:${KAFKA_PORT}"
+    sed -i'' -e "s;\(#\)listeners=.*;listeners=PLAINTEXT://${ADVERTISED_LISTENERS}:${KAFKA_PORT};g" /opt/kafka/config/server.properties
 fi
