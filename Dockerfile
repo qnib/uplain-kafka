@@ -8,7 +8,7 @@ ENV KAFKA_PORT=9092 \
     INTER_BROKER_PROTOCOL_VERSION=0.10.2 \
     LOG_MESSAGE_FORMAT_VERSION=0.10.2
 RUN apt-get update \
- && apt-get install -y curl netcat net-tools libsnappy-java \
+ && apt-get install -y curl netcat net-tools libsnappy-java bc \
  && curl -fLs http://apache.mirrors.pair.com/kafka/${KAFKA_VER}/kafka_${API_VER}-${KAFKA_VER}.tgz | tar xzf - -C /opt \
  && mv /opt/kafka_${API_VER}-${KAFKA_VER} /opt/kafka/
 COPY opt/qnib/entry/20-kafka.sh /opt/qnib/entry/
