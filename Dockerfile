@@ -4,13 +4,11 @@ ARG KAFKA_VER=0.10.2.1
 ARG API_VER=2.12
 ENV KAFKA_PORT=9092 \
     ENTRYPOINTS_DIR=/opt/qnib/entry \
-    ZK_SERVERS=zookeeper \
-    KAFKA_BROKER_ID=0 \
-    ADVERTISED_LISTENERS=kafka_broker \
-    INTER_BROKER_PROTOCOL_VERSION=0.10.0-IV1 \
-    LOG_MESSAGE_FORMAT_VERSION=0.10.0-IV1
+    ZK_SERVERS=tasks.zookeeper \
+    INTER_BROKER_PROTOCOL_VERSION=0.10.2 \
+    LOG_MESSAGE_FORMAT_VERSION=0.10.2
 RUN apt-get update \
- && apt-get install -y curl netcat net-tools \
+ && apt-get install -y curl netcat net-tools libsnappy-java \
  && curl -fLs http://apache.mirrors.pair.com/kafka/${KAFKA_VER}/kafka_${API_VER}-${KAFKA_VER}.tgz | tar xzf - -C /opt \
  && mv /opt/kafka_${API_VER}-${KAFKA_VER} /opt/kafka/
 COPY opt/qnib/entry/20-kafka.sh /opt/qnib/entry/
